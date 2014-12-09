@@ -11,6 +11,7 @@ char outputBuffer[10];
 void setup() {
         uView.begin();			// start MicroView
       	uView.clear(PAGE);		// clear page
+        uView.setFontType(1);
         pinMode(buttonPin, INPUT);  	// initialize the pushbutton pin as an input
 	digitalWrite(buttonPin, HIGH); 	// set Internal pull-up
         countdownExpired();
@@ -33,6 +34,10 @@ void loop() {
             countdownStart = millis()/1000;
           }
           countdownSeconds += 15 * 60;
+          // One-hour max
+          if (countdownSeconds > 3600) {
+            countdownSeconds = 3600;
+          }
           buttonPressed = true;
         } else if (buttonState == LOW && buttonPressed) { // depressed button
           buttonPressed = false;
@@ -44,8 +49,8 @@ void loop() {
             countdownExpired();
           } else {
             uView.clear(PAGE);
-            uView.setCursor(0,0);
-            sprintf(outputBuffer,"%2d:%02d", (int)(remaining/60), (int)(remaining%60));
+            uView.setCursor(1,1);
+            sprintf(outputBuffer,"\n%3d:%02d", (int)(remaining/60), (int)(remaining%60));
             uView.print(outputBuffer);
             uView.display();
           }
