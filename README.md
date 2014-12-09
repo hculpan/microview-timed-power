@@ -1,4 +1,4 @@
-#microview-timed-power
+microview-timed-power
 =====================
 
 This project uses the MicroView microcontroller from SparkFun.com.
